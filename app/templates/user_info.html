@@ -1,0 +1,108 @@
+<ng-form class="user-info" name="formUserInfo" tabindex="-1">
+
+  <div class="user-info-content">
+
+      <!-- Content -->
+      <fieldset>
+        <div layout="row">
+          <div flex="55">
+            <div class="user-info-field user-info-field--emphasis">
+              <input type="text" name="lastName" ng-model="user.lastName" ng-model-options="{ debounce: 200 }" ng-change="onUserChange('lastName')" placeholder="last name" ng-required="required" ng-readonly="readonly">
+            </div>
+          </div>
+          <div flex="45">
+            <div class="user-info-field user-info-field--bordered user-info-field--emphasis">
+              <input type="text" name="firstName" ng-model="user.firstName" ng-change="onUserChange('firstName')" placeholder="first name" ng-readonly="readonly">
+            </div>
+          </div>
+        </div>
+        <div layout="row">
+          <div flex="65">
+            <div class="user-info-field">
+              <input type="text" name="phone" ng-model="user.phone" ng-model-options="{ debounce: 200 }" ng-change="onUserChange('phone')" placeholder="PHONE" ng-readonly="readonly">
+            </div>
+          </div>
+          <div flex="35">
+            <div class="user-info-field user-info-field--bordered">
+              <input type="text"
+                name="memberNo"
+                ng-model="user.memberNo"
+                ng-model-options="{ debounce: 200 }" ng-change="onUserChange('memberNo')" placeholder="Member number" ng-readonly="readonly">
+            </div>
+          </div>
+        </div>
+        <div layout="row">
+          <div flex>
+            <div class="user-info-field">
+              <input type="text"
+                name="email"
+                ng-model="user.email"
+                ng-model-options="{ debounce: 200 }"
+                ng-change="onUserChange('email')"
+                placeholder="Mail"
+                ng-readonly="(user.id && user.email && user.lastActivityAt) || readonly">
+            </div>
+          </div>
+        </div>
+        <div class="user-info-alerts" ng-show="submitAlerts.length">
+          <uib-alert ng-repeat="alert in submitAlerts" type="alert.type">
+            {{alert.message}}
+          </uib-alert>
+          <span class="btn btn-primary btn-block" ng-click="dismissAlerts()">ok</span>
+        </div>
+      </fieldset>
+
+      <!-- Results -->
+      <div class="user-info-results" ng-if="searchResults.length">
+        <div class="user-info-results-header">
+          <span class="user-info-results-close icon-close" ng-click="closeResults()">x</span>
+          {{ resultsInfo.length }} résultats
+        </div>
+        <md-content class="user-info-results-content">
+          <md-list>
+            <md-item ng-repeat="result in searchResults" >
+
+              <div class="ios-list-title" ng-if="result.role != searchResults[$index - 1].role">
+                <span data-icon="users"></span>
+                {{ result.role }}
+              </div>
+
+              <md-item-content ng-click="setUser(result)">
+                <div class="md-tile-content">
+                  <div layout="row" layout-align="center-center">
+                    <div flex="15" class="text--center">
+                      <affiliation-type-badge
+                        affiliation-type-id="result.affiliationTypeId"
+                        class="icon">
+                      </affiliation-type-badge>
+                    </div>
+                    <div flex="85">
+                      <div class="user-info-results-item">
+                        {{ result.firstName }}
+                        <strong>{{ result.lastName }}</strong>
+                        <span ng-if="result.memberNo" class="push-half--left muted">
+                          {{ result.memberNo }}
+                        </span>
+                      </div>
+                      <div class="vk-content">
+                        <span ng-if="result.phone" class="push-half--right">
+                          <span class="icon icon-phone"></span>
+                          {{ result.phone }}
+                        </span>
+                        <span ng-if="result.email">
+                          <span class="icon icon-email"></span>
+                          {{ result.email }}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </md-item-content>
+              <md-divider ng-if="!$last"></md-divider>
+            </md-item>
+          </md-list>
+        </md-content>
+      </div>
+
+    </div>
+</ng-form>

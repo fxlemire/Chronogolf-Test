@@ -1,0 +1,35 @@
+parser: babel-eslint
+
+env:
+  browser: true
+
+rules:
+  brace-style: 2
+  camelcase: [2, { properties: 'never' }]
+  key-spacing: 0
+  quotes: [2, single, avoid-escape]
+  no-multi-spaces: 0
+  no-underscore-dangle: 0
+  no-use-before-define: 0
+  strict: 0
+
+globals:
+  require: false
+  angular: false
+  io: false
+  __dirname: true
+  describe: false
+  fdescribe: false
+  xdescribe: false
+  beforeEach: false
+  afterEach: false
+  it: false
+  fit: false
+  xit: false
+  expect: false
+  spyOn: false
+  jasmine: false
+  beforeAll: false
+  inject: false
+  module: false
+  process: false

@@ -1,0 +1,179 @@
+
+
+
+.user-info {
+  display: block;
+  background: white;
+  clear: both;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none; }
+  .user-info md-list {
+    padding: 0; }
+  .user-info-header {
+    background: #eeeeee;
+    color: #424B44;
+    font-weight: bold;
+    padding: 5px 10px;
+    display: none; }
+    .user-info-header .user-info-reset {
+      text-align: right; }
+      .user-info-header .user-info-reset [data-icon] {
+        bottom: -2px;
+        font-size: 1.2em; }
+  .user-info-field input {
+    width: 100%;
+    border: none;
+    outline: none;
+    padding: 10px 0 5px 0;
+    border-bottom: 1px solid #e2e2e2;
+    -webkit-transition: all 200ms ease-out;
+    transition: all 200ms ease-out; }
+    .user-info-field input:hover {
+      border-color: #b9d5f2; }
+    .user-info-field input:focus {
+      border-color: #1572D4; }
+    .user-info-field input[readonly] {
+      cursor: not-allowed; }
+    .user-info-field input[name="email"] + span {
+      z-index: 1;
+      position: absolute;
+      top: 50%;
+      right: 0;
+      -webkit-transform: translateY(-50%);
+          -ms-transform: translateY(-50%);
+              transform: translateY(-50%);
+      font-size: 10px;
+      padding: 4px;
+      cursor: pointer;
+      opacity: 0.8;
+      -webkit-transition: all 100ms ease-out;
+      transition: all 100ms ease-out; }
+      .user-info-field input[name="email"] + span:hover {
+        color: #1572D4;
+        opacity: 1; }
+  .user-info-field--bordered {
+    padding-left: 1px; }
+    .user-info-field--bordered input {
+      padding-left: 10px; }
+    .user-info-field--bordered::before {
+      content: '';
+      height: 16px;
+      width: 1px;
+      background: #e2e2e2;
+      position: absolute;
+      bottom: 0px;
+      left: 0px; }
+  .user-info-field--emphasis input {
+    font-size: 1.15em;
+    font-weight: bold; }
+  .user-info-results {
+    z-index: 5;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 100%;
+    opacity: 1;
+    border-radius: 0 0 4px 4px;
+    overflow: hidden;
+    border: 1px solid #DFDFDF;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
+    margin: -2px -1px 0 -1px;
+    top: auto;
+    }
+    .user-info-results-close {
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      width: 40px;
+      line-height: 36px;
+      text-align: center;
+      display: inline-block;
+      cursor: pointer;
+      background: #eeeeee; }
+      .user-info-results-close:hover {
+        background: #bdbdbd; }
+  .user-info-results-header {
+    background: #ececec;
+    color: #424B44;
+    font-weight: bold;
+    line-height: 35px;
+    height: 36px;
+    padding: 0px 10px;
+    border-bottom: 1px solid #DCDCDC; }
+    .user-info-results-header:before {
+      content: '';
+      height: 0;
+      width: 0;
+      border-bottom: 5px solid #ececec;
+      border-left: 5px solid transparent;
+      border-right: 5px solid transparent;
+      position: absolute;
+      margin-left: 50%;
+      left: -5px;
+      top: -5px; }
+  .user-info-results-content {
+    background: white;
+    z-index: 1000000;
+    width: 100%;
+    border-top-width: 0;
+    cursor: pointer;
+    max-height: 240px;
+    overflow-y: scroll;
+    overflow-x: hidden; }
+    .user-info-results-content .vk-content {
+      font-size: 12px;
+      color: #686f69; }
+    .user-info-results-content .md-tile-content {
+      padding: 6px 10px 6px 0; }
+      .user-info-results-content .md-tile-content:focus {
+        outline: none;
+        background: #b9d5f2; }
+    .user-info-results-content md-divider {
+      border-color: #eeeeee; }
+    .user-info-results-content md-item-content:hover {
+      background: #eeeeee; }
+    .user-info-results-content md-item-content:active {
+      background: #d6d6d6; }
+    .user-info-results-content md-item-content.active {
+      color: white;
+      background: #1572D4; }
+    .user-info-results-content md-item-content:focus {
+      outline: none; }
+      .user-info-results-content md-item-content:focus:not(.active) {
+        background: #b9d5f2; }
+    .user-info-results-content md-item-content .user-info-results-item {
+      overflow-x: hidden;
+      max-width: 100%;
+      white-space: nowrap;
+      text-overflow: ellipsis; }
+  .user-info--loading {
+    cursor: progress !important; }
+  .user-info--readonly .user-info-field input {
+    border-color: #f1f1f1; }
+    .user-info--readonly .user-info-field input::-webkit-input-placeholder {
+      color: #e2e2e2; }
+    .user-info--readonly .user-info-field input:-moz-placeholder {
+      color: #e2e2e2; }
+    .user-info--readonly .user-info-field input::-moz-placeholder {
+      color: #e2e2e2; }
+    .user-info--readonly .user-info-field input:-ms-input-placeholder {
+      color: #e2e2e2; }
+  .user-info--readonly .user-info-field::before {
+    background-color: #f1f1f1; }
+  .user-info--readonly .user-info-header {
+    background: white; }
+  .user-info--readonly .user-info-reset {
+    display: none; }
+  .user-info--padded fieldset {
+    padding: 0 10px 10px; }
+  .user-info--rounded {
+    background: white;
+    border: 1px solid #DDD;
+    border-radius: 4px; }
+    .user-info--rounded fieldset {
+      border-radius: 0 0 4px 4px; }
+    .user-info--rounded .user-info-header {
+      border-radius: 4px 4px 0 0; }
