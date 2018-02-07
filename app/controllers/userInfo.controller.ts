@@ -13,8 +13,8 @@ class UserInfoController {
   private customersCollection: Customer[];
 
   constructor(
-    private $timeout,
-    private $q,
+    private $timeout: angular.ITimeoutService,
+    private $q: angular.IQService,
     private userInfoService: UserInfoService,
   ) {
     this.customersCollection = this.userInfoService.getCustomers();
