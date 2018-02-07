@@ -12,3 +12,5 @@ module
   .component(userInfoComponentName, userInfoComponent)
   .controller(UserInfoControllerName, UserInfoController)
   .service(userInfoServiceName, UserInfoService);
+
+angular.element(document).ready(() => angular.bootstrap(document.body, ['chronogolf']));
