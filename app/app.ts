@@ -1,10 +1,14 @@
-import UserInfoDirective from './directives/userInfo';
+import userInfoComponent, { userInfoComponentName } from './components/userInfo.component';
+import UserInfoController, { UserInfoControllerName } from './controllers/userInfo.controller';
+import UserInfoService, { userInfoServiceName } from './services/userInfo.service';
 
 const module = angular.module('chronogolf', [
-    'ngSanitize',
-    'ngMessages',
-    'ui.select'
+  'ngSanitize',
+  'ngMessages',
+  'ui.select',
 ]);
 
 module
-    .directive('userInfo', UserInfoDirective);
+  .component(userInfoComponentName, userInfoComponent)
+  .controller(UserInfoControllerName, UserInfoController)
+  .service(userInfoServiceName, UserInfoService);

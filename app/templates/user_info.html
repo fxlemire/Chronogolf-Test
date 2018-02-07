@@ -1,4 +1,4 @@
-<ng-form class="user-info" name="formUserInfo" tabindex="-1">
+<ng-form class="user-info" name="$ctrl.formUserInfo" tabindex="-1">
 
   <div class="user-info-content">
 
@@ -7,27 +7,27 @@
         <div layout="row">
           <div flex="55">
             <div class="user-info-field user-info-field--emphasis">
-              <input type="text" name="lastName" ng-model="user.lastName" ng-model-options="{ debounce: 200 }" ng-change="onUserChange('lastName')" placeholder="last name" ng-required="required" ng-readonly="readonly">
+              <input type="text" name="lastName" ng-model="$ctrl.user.lastName" ng-model-options="{ debounce: 200 }" ng-change="$ctrl.onUserChange('lastName')" placeholder="last name" ng-required="required" ng-readonly="readonly">
             </div>
           </div>
           <div flex="45">
             <div class="user-info-field user-info-field--bordered user-info-field--emphasis">
-              <input type="text" name="firstName" ng-model="user.firstName" ng-change="onUserChange('firstName')" placeholder="first name" ng-readonly="readonly">
+              <input type="text" name="firstName" ng-model="$ctrl.user.firstName" ng-change="$ctrl.onUserChange('firstName')" placeholder="first name" ng-readonly="readonly">
             </div>
           </div>
         </div>
         <div layout="row">
           <div flex="65">
             <div class="user-info-field">
-              <input type="text" name="phone" ng-model="user.phone" ng-model-options="{ debounce: 200 }" ng-change="onUserChange('phone')" placeholder="PHONE" ng-readonly="readonly">
+              <input type="text" name="phone" ng-model="$ctrl.user.phone" ng-model-options="{ debounce: 200 }" ng-change="$ctrl.onUserChange('phone')" placeholder="PHONE" ng-readonly="readonly">
             </div>
           </div>
           <div flex="35">
             <div class="user-info-field user-info-field--bordered">
               <input type="text"
-                name="memberNo"
-                ng-model="user.memberNo"
-                ng-model-options="{ debounce: 200 }" ng-change="onUserChange('memberNo')" placeholder="Member number" ng-readonly="readonly">
+                name="id"
+                ng-model="$ctrl.user.id"
+                ng-model-options="{ debounce: 200 }" ng-change="$ctrl.onUserChange('id')" placeholder="Member number" ng-readonly="readonly">
             </div>
           </div>
         </div>
@@ -36,11 +36,11 @@
             <div class="user-info-field">
               <input type="text"
                 name="email"
-                ng-model="user.email"
+                ng-model="$ctrl.user.email"
                 ng-model-options="{ debounce: 200 }"
-                ng-change="onUserChange('email')"
+                ng-change="$ctrl.onUserChange('email')"
                 placeholder="Mail"
-                ng-readonly="(user.id && user.email && user.lastActivityAt) || readonly">
+                ng-readonly="($ctrl.user.id && $ctrl.user.email && $ctrl.user.lastActivityAt) || readonly">
             </div>
           </div>
         </div>
@@ -53,21 +53,21 @@
       </fieldset>
 
       <!-- Results -->
-      <div class="user-info-results" ng-if="searchResults.length">
+      <div class="user-info-results" ng-if="$ctrl.searchResults.length">
         <div class="user-info-results-header">
-          <span class="user-info-results-close icon-close" ng-click="closeResults()">x</span>
-          {{ resultsInfo.length }} résultats
+          <span class="user-info-results-close icon-close" ng-click="$ctrl.closeResults()">x</span>
+          {{ $ctrl.resultsInfo.length }} résultats
         </div>
         <md-content class="user-info-results-content">
           <md-list>
-            <md-item ng-repeat="result in searchResults" >
+            <md-item ng-repeat="result in $ctrl.searchResults" >
 
-              <div class="ios-list-title" ng-if="result.role != searchResults[$index - 1].role">
+              <div class="ios-list-title" ng-if="result.role != $ctrl.searchResults[$index - 1].role">
                 <span data-icon="users"></span>
                 {{ result.role }}
               </div>
 
-              <md-item-content ng-click="setUser(result)">
+              <md-item-content ng-click="$ctrl.setUser(result)">
                 <div class="md-tile-content">
                   <div layout="row" layout-align="center-center">
                     <div flex="15" class="text--center">
@@ -80,8 +80,8 @@
                       <div class="user-info-results-item">
                         {{ result.firstName }}
                         <strong>{{ result.lastName }}</strong>
-                        <span ng-if="result.memberNo" class="push-half--left muted">
-                          {{ result.memberNo }}
+                        <span ng-if="result.id" class="push-half--left muted">
+                          {{ result.id }}
                         </span>
                       </div>
                       <div class="vk-content">

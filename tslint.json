@@ -1,8 +1,10 @@
 {
+  "extends": "tslint-config-airbnb",
   "rulesDirectory": [
     "node_modules/codelyzer"
   ],
   "rules": {
+    /* Angular 2 tslint */
     "arrow-return-shorthand": true,
     "callable-types": true,
     "class-name": true,
@@ -138,6 +140,30 @@
     "use-life-cycle-interface": true,
     "use-pipe-transform-interface": true,
     "component-class-suffix": true,
-    "directive-class-suffix": true
+    "directive-class-suffix": true,
+
+    /* Custom */
+
+    // FUNCTIONALITY
+    "no-for-in-array": true,
+    "no-null-keyword": true,
+    "no-unused-variable": [true],
+    "restrict-plus-operands": true,
+    "strict-boolean-expressions": [true, "allow-number", "allow-string", "allow-undefined-union"],
+
+    // OTHER
+    "import-name": false,
+
+    // STYLE
+    "completed-docs": false,
+    "no-boolean-literal-compare": true,
+    "no-increment-decrement": false,
+    "ordered-imports": [
+      true,
+      {
+        "import-sources-order": "lowercase-last",
+        "named-imports-order": "lowercase-last"
+      }
+    ]
   }
 }

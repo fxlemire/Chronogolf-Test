@@ -69,6 +69,7 @@
     "ts-node": "^4.1.0",
     "tsify": "^3.0.4",
     "tslint": "^5.9.1",
+    "tslint-config-airbnb": "^5.6.0",
     "typescript": "^2.7.1",
     "uglifyify": "^3.0.1",
     "ui-select": "^0.14.2",
