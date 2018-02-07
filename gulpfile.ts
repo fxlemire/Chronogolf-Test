@@ -1,27 +1,21 @@
-'use strict'; // eslint-disable-line
+import * as browserify from 'browserify';
+import * as del from 'del';
+import * as gulp from 'gulp';
+import * as loadPlugins from 'gulp-load-plugins';
+import * as path from 'path';
+import * as runSequence from 'run-sequence';
+import * as tsify from 'tsify';
+import * as buffer from 'vinyl-buffer';
+import * as source from 'vinyl-source-stream';
+import * as watchify from 'watchify';
 
-var path = require('path');
-
-var _ = require('lodash');
-
-var gulp        = require('gulp');
-var runSequence = require('run-sequence');
-var source      = require('vinyl-source-stream');
-var buffer      = require('vinyl-buffer');
-var del         = require('del');
-var $           = require('gulp-load-plugins')();
-
-var browserify = require('browserify');
-var watchify   = require('watchify');
-var envify     = require('envify/custom');
-
-var NODE_ENV = process.env.NODE_ENV ? process.env.NODE_ENV.toLowerCase() : 'development';
-var PROD     = NODE_ENV === 'production';
-
-
+const envify = require('envify/custom');
+const $: any = loadPlugins();
+const NODE_ENV = process.env.NODE_ENV ? process.env.NODE_ENV.toLowerCase() : 'development';
+const PROD = NODE_ENV === 'production';
 
 // --- DEST ---
-var DEST = {
+const DEST = {
     html:  path.join('dist'),
     html_templates:  path.join('dist', 'assets', 'templates'),
     js:    path.join('dist', 'assets', 'js'),
@@ -29,8 +23,6 @@ var DEST = {
     fonts: path.join('dist', 'assets', 'fonts'),
     img:   path.join('dist', 'assets', 'img')
 };
-
-
 
 // --- HTML ---
 function taskHtml() {
@@ -48,19 +40,16 @@ function taskTemplatesHtml() {
 }
 
 // --- JS ---
-var envifyValues = {
-    NODE_ENV: NODE_ENV
-};
+const envifyValues = { NODE_ENV };
 
-var opts = _.assign({}, watchify.args, {
-    entries: './app.js',
+const opts = {
+    ...watchify.args,
+    entries: './app.ts',
     debug: true,
     basedir: './app/'
-});
+};
 
-
-var jsBundle = watchify(browserify(opts))
-    .transform('babelify')
+let jsBundle: any = watchify(browserify(opts).plugin('tsify', { project: './tsconfig.json', files: [] }))
     .transform(envify(envifyValues))
     .transform('browserify-ngannotate');
 
@@ -71,7 +60,6 @@ if (PROD) {
 jsBundle.on('log', $.util.log.bind($.util, '[Browserify] Update app'));
 
 jsBundle.on('update', taskJs);
-
 
 function taskJs() {
     return jsBundle.bundle()
@@ -91,7 +79,7 @@ function closeJsWatcher() {
 
 // --- JS VENDORS ---
 function taskVendorsJs() {
-    var src = [
+    const src = [
         './node_modules/angular/angular.js',
         './node_modules/angular-sanitize/angular-sanitize.js',
         './node_modules/angular-messages/angular-messages.js',
@@ -103,19 +91,15 @@ function taskVendorsJs() {
         .pipe(gulp.dest(DEST.js));
 }
 
-
-
 // --- CSS ---
 function taskCss() {
-    var gulpRubySassOptions = {
+    const gulpRubySassOptions = {
         style: PROD ? 'compressed' : 'expanded',
         sourcemap: true
     };
 
     return $.rubySass('./app/app.scss', gulpRubySassOptions)
-        .on('error', function (err) {
-            $.util.log('[Sass] Error', err.message);
-        })
+        .on('error', err => $.util.log('[Sass] Error', err.message))
         .pipe($.autoprefixer())
         .pipe(gulp.dest(DEST.css))
         .pipe($.size());
@@ -123,7 +107,7 @@ function taskCss() {
 
 // --- CSS VENDORS ---
 function taskVendorsCss() {
-    var src = [
+    const src = [
         './node_modules/bootstrap/dist/css/bootstrap.css',
         './node_modules/ui-select/dist/select.css',
         './node_modules/angular-material/angular-material.css',
@@ -135,19 +119,15 @@ function taskVendorsCss() {
         .pipe(gulp.dest(DEST.css));
 }
 
-
-
 // --- CSS FONTS ---
 function taskFontsCss() {
-    var src = [
-        './node_modules/bootstrap/dist/fonts/*'
+    const src = [
+        './node_modules/bootstrap/dist/fonts/*',
     ];
 
     return gulp.src(src)
         .pipe(gulp.dest(DEST.fonts));
 }
-
-
 
 // --- TEMPLATES ---
 function taskTemplates() {
@@ -159,8 +139,6 @@ function taskTemplates() {
         .pipe($.size());
 }
 
-
-
 // --- IMAGES ---
 function taskImages() {
     return gulp.src('./app/img/**/*.{png,jpeg,jpg,svg}')
@@ -169,8 +147,6 @@ function taskImages() {
         .pipe(gulp.dest(DEST.img))
         .pipe($.size());
 }
-
-
 
 // --- SERVER ---
 function taskServer() {
@@ -181,40 +157,31 @@ function taskServer() {
         }));
 }
 
-
-
 // --- TASKS ---
-gulp.task('clean', function clean() {
-    return del([path.join(DEST.html, '**'), '!' + DEST.html], { force: true });
-});
-
-gulp.task('html', ['htmlMain', 'htmlTemplates']);
+gulp.task('clean', () => del([path.join(DEST.html, '**'), '!' + DEST.html], { force: true }));
 gulp.task('htmlMain', taskHtml);
 gulp.task('htmlTemplates', taskTemplatesHtml);
-gulp.task('js', ['js:app', 'js:vendors']);
+gulp.task('html', ['htmlMain', 'htmlTemplates']);
 gulp.task('js:app', taskJs);
 gulp.task('js:vendors', taskVendorsJs);
-gulp.task('css', ['css:app', 'css:vendors', 'css:fonts']);
+gulp.task('js', ['js:app', 'js:vendors']);
 gulp.task('css:app', taskCss);
 gulp.task('css:vendors', taskVendorsCss);
 gulp.task('css:fonts', taskFontsCss);
+gulp.task('css', ['css:app', 'css:vendors', 'css:fonts']);
 gulp.task('templates', taskTemplates);
 gulp.task('images', taskImages);
 gulp.task('server', taskServer);
 
-gulp.task('_build', function(done) {
-    runSequence(
-        'clean',
-        ['html', 'js', 'css', 'templates', 'images'],
-        done
-    );
-});
+gulp.task('_build', done => runSequence(
+    'clean',
+    ['html', 'js', 'css', 'templates', 'images'],
+    done
+));
 
-gulp.task('build', ['_build'], function() {
-    closeJsWatcher();
-});
+gulp.task('build', ['_build'], () => closeJsWatcher());
 
-gulp.task('watch', ['_build'], function() {
+gulp.task('watch', ['_build'], () => {
     gulp.watch('./app/index.html', ['html']);
 
     gulp.watch('./app/templates/*.html', ['html']);
@@ -227,6 +194,4 @@ gulp.task('watch', ['_build'], function() {
     gulp.watch(['./app/**/*.html', '!./app/index.html'], ['templates']);
 });
 
-gulp.task('default', function(done) {
-    runSequence('watch', 'server', done);
-});
+gulp.task('default', done => runSequence('watch', 'server', done));

@@ -10,7 +10,6 @@ module.exports = function(config) {
             { pattern: './node_modules/angular-messages/angular-messages.js', watched: false },
             { pattern: './node_modules/angular-mocks/angular-mocks.js',       watched: false },
             { pattern: './node_modules/ui-select/dist/select.js',             watched: false },
-
             { pattern: './app/**/tests/**/*.spec.js', watched: false }
         ],
 
