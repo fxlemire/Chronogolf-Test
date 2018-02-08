@@ -1,5 +1,11 @@
-import * as _angular from 'angular';
+declare const angular;
 
-declare global {
-  const angular: typeof _angular;
+declare module "*.json" {
+  const value: any;
+  export default value;
+}
+
+declare module "*.html" {
+  const value: any;
+  export default value;
 }

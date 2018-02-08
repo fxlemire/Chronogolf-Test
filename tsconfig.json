@@ -1,17 +1,20 @@
 {
-  "compileOnSave": false,
   "compilerOptions": {
-    "outDir": "./dist/out-tsc",
-    "sourceMap": true,
     "declaration": false,
-    "module": "umd",
-    "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
+    "lib": ["es2017", "dom"],
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "noImplicitAny": false,
+    "removeComments": false,
+    "sourceMap": true,
+    "suppressImplicitAnyIndexErrors": true,
     "target": "es5",
-    "typeRoots": ["node_modules/@types"],
-    "lib": ["es2017", "dom"]
+    "typeRoots": ["node_modules/@types"]
   },
-  "exclude": ["./*.ts"],
-  "include": ["./app/**/*.ts"]
+  "exclude": ["node_modules"],
+  "include": [
+    "./**/*.ts"
+  ]
 }

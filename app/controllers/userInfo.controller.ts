@@ -1,10 +1,11 @@
+import { IFormController, IQService, ITimeoutService } from 'angular';
 import { Customer } from '../interfaces';
 import UserInfoService from '../services/userInfo.service';
 
 export const UserInfoControllerName = 'UserInfoController';
 
 class UserInfoController {
-  public formUserInfo: angular.IFormController;
+  public formUserInfo: IFormController;
   public loading = true;
   public resultsInfo: { length: number };
   public searchResults: Customer[];
@@ -13,8 +14,8 @@ class UserInfoController {
   private customersCollection: Customer[];
 
   constructor(
-    private $timeout: angular.ITimeoutService,
-    private $q: angular.IQService,
+    private $timeout: ITimeoutService,
+    private $q: IQService,
     private userInfoService: UserInfoService,
   ) {
     this.customersCollection = this.userInfoService.getCustomers();

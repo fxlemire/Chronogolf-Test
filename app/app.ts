@@ -2,6 +2,8 @@ import userInfoComponent, { userInfoComponentName } from './components/userInfo.
 import UserInfoController, { UserInfoControllerName } from './controllers/userInfo.controller';
 import UserInfoService, { userInfoServiceName } from './services/userInfo.service';
 
+import './app.scss';
+
 const module = angular.module('chronogolf', [
   'ngSanitize',
   'ngMessages',

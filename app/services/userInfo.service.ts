@@ -1,14 +1,13 @@
+import * as customersCollection from '../data/customers.json';
 import { Customer } from '../interfaces';
-
-const customersCollection: Customer[] = require('../data/customers');
 
 export const userInfoServiceName = 'userInfoService';
 
 class UserInfoService {
   constructor() {}
 
-  getCustomers() {
-    return customersCollection;
+  getCustomers(): Customer[] {
+    return customersCollection as any as Customer[];
   }
 }
 
