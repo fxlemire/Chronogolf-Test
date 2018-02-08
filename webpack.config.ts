@@ -16,8 +16,8 @@ const webpackConfig: webpack.Configuration = {
   devtool: 'cheap-module-eval-source-map',
 
   entry: {
-    app: './app/app.ts',
-    vendor: './app/vendor.ts',
+    app: './app/app.module.ng.ts',
+    main: './app/main.ts',
   },
 
   output: {
@@ -28,6 +28,9 @@ const webpackConfig: webpack.Configuration = {
 
   resolve: {
     extensions: ['.ts', '.js'],
+    alias: {
+      '@angular/upgrade/static': '@angular/upgrade/bundles/upgrade-static.umd.js',
+    },
   },
 
   module: {
@@ -39,6 +42,7 @@ const webpackConfig: webpack.Configuration = {
             loader: 'awesome-typescript-loader',
             options: { configFileName: 'tsconfig.json' },
           },
+          'angular2-template-loader',
         ],
       },
       {
@@ -74,9 +78,14 @@ const webpackConfig: webpack.Configuration = {
   plugins: [
     new CleanWebpackPlugin([path.join(__dirname, DIST.dist)]),
     new HtmlWebpackPlugin({ template: './app/index.html' }),
+    new webpack.ContextReplacementPlugin(
+      /(.+)?angular(\\|\/)core(.+)?/,
+      path.join(__dirname, './app'),
+      {},
+    ),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.optimize.CommonsChunkPlugin({
-      names: ['app', 'vendor'],
+      names: ['main', 'app'],
     }),
     new ExtractTextPlugin(`${DIST.css}/[name].css`),
   ],
