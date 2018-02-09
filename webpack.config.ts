@@ -6,6 +6,7 @@ import * as webpack from 'webpack';
 
 const DIST = {
   dist: 'dist',
+  data: path.join('assets', 'data'),
   js: path.join('assets', 'js'),
   css: path.join('assets', 'css'),
   fonts: path.join('assets', 'fonts'),
@@ -44,6 +45,10 @@ const webpackConfig: webpack.Configuration = {
           },
           'angular2-template-loader',
         ],
+      },
+      {
+        test: /\.json$/,
+        use: `file-loader?name=${DIST.data}/[name].json`,
       },
       {
         test: /\.css$/,

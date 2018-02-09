@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material';
 
 import { Customer } from '../interfaces';
@@ -11,7 +11,7 @@ export const userInfoComponentName = 'appUserInfo';
   selector: 'app-user-info',
   template: userInfoTemplate as any,
 })
-export class UserInfoComponent {
+export class UserInfoComponent implements OnInit {
   public displayedColumns = ['id', 'first', 'last', 'phone', 'email'];
   public loading = true;
   public resultsInfo: { length: number };
@@ -21,7 +21,16 @@ export class UserInfoComponent {
   private customersCollection: Customer[];
 
   constructor(@Inject('userInfoService') private userInfoService: UserInfoService) {
-    this.customersCollection = this.userInfoService.getCustomers();
+    this.customersCollection = [];
+  }
+
+  async ngOnInit() {
+    try {
+      this.customersCollection = await this.userInfoService.getCustomers();
+    } catch (e) {
+      this.customersCollection = [];
+      console.error(e);
+    }
   }
 
   closeResults() {
