@@ -33,6 +33,12 @@
   dependencies:
     tslib "^1.7.1"
 
+"@angular/cdk@^5.2.0":
+  version "5.2.0"
+  resolved "https://registry.yarnpkg.com/@angular/cdk/-/cdk-5.2.0.tgz#4368f6749e915cdcc75d325ae33fdb3f85a88108"
+  dependencies:
+    tslib "^1.7.1"
+
 "@angular/cli@^1.6.8":
   version "1.6.8"
   resolved "https://registry.yarnpkg.com/@angular/cli/-/cli-1.6.8.tgz#963b48086ee3e9584a136d3c45893260f516dd75"
@@ -139,6 +145,12 @@
   version "5.2.4"
   resolved "https://registry.yarnpkg.com/@angular/language-service/-/language-service-5.2.4.tgz#281631793671844ae8f6f9c0ec80b91d064db2d8"
 
+"@angular/material@^5.2.0":
+  version "5.2.0"
+  resolved "https://registry.yarnpkg.com/@angular/material/-/material-5.2.0.tgz#8599e3149d48487e3e92e941fa9dc55176e3a0cf"
+  dependencies:
+    tslib "^1.7.1"
+
 "@angular/platform-browser-dynamic@^5.2.4":
   version "5.2.4"
   resolved "https://registry.yarnpkg.com/@angular/platform-browser-dynamic/-/platform-browser-dynamic-5.2.4.tgz#708457c9aafb1b812187c95d10365685521314d4"
@@ -162,6 +174,10 @@
   resolved "https://registry.yarnpkg.com/@angular/upgrade/-/upgrade-5.2.4.tgz#3a8413545f245dc8873d68e80176501d2a25b3f4"
   dependencies:
     tslib "^1.7.1"
+
+"@ng-bootstrap/ng-bootstrap@^1.0.0":
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/@ng-bootstrap/ng-bootstrap/-/ng-bootstrap-1.0.0.tgz#8f2ae70db2fe1dcbf5e0acb49dc2b1bbba2be8d2"
 
 "@ngtools/json-schema@1.1.0", "@ngtools/json-schema@^1.1.0":
   version "1.1.0"

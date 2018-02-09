@@ -1,4 +1,4 @@
-<ng-form class="user-info" name="$ctrl.formUserInfo" tabindex="-1">
+<div class="user-info">
 
   <div class="user-info-content">
 
@@ -6,103 +6,119 @@
       <fieldset>
         <div layout="row">
           <div flex="55">
-            <div class="user-info-field user-info-field--emphasis">
-              <input type="text" name="lastName" ng-model="$ctrl.user.lastName" ng-model-options="{ debounce: 200 }" ng-change="$ctrl.onUserChange('lastName')" placeholder="last name" ng-required="required" ng-readonly="readonly">
-            </div>
+            <mat-form-field>
+              <input
+                matInput
+                type="text"
+                name="lastName"
+                [(ngModel)]="user.lastName"
+                (ngModelChange)="onUserChange('lastName')"
+                placeholder="Last Name"
+                required
+              >
+            </mat-form-field>
           </div>
           <div flex="45">
-            <div class="user-info-field user-info-field--bordered user-info-field--emphasis">
-              <input type="text" name="firstName" ng-model="$ctrl.user.firstName" ng-change="$ctrl.onUserChange('firstName')" placeholder="first name" ng-readonly="readonly">
-            </div>
+            <mat-form-field>
+              <input
+                matInput
+                type="text"
+                name="firstName"
+                [(ngModel)]="user.firstName"
+                (change)="onUserChange('firstName')"
+                placeholder="First Name"
+              >
+            </mat-form-field>
           </div>
         </div>
         <div layout="row">
           <div flex="65">
-            <div class="user-info-field">
-              <input type="text" name="phone" ng-model="$ctrl.user.phone" ng-model-options="{ debounce: 200 }" ng-change="$ctrl.onUserChange('phone')" placeholder="PHONE" ng-readonly="readonly">
-            </div>
+            <mat-form-field>
+              <input
+                matInput
+                type="text"
+                name="phone"
+                [(ngModel)]="user.phone"
+                (change)="onUserChange('phone')"
+                placeholder="Phone"
+              >
+            </mat-form-field>
           </div>
           <div flex="35">
-            <div class="user-info-field user-info-field--bordered">
-              <input type="text"
+            <mat-form-field>
+              <input
+                matInput
+                type="text"
                 name="id"
-                ng-model="$ctrl.user.id"
-                ng-model-options="{ debounce: 200 }" ng-change="$ctrl.onUserChange('id')" placeholder="Member number" ng-readonly="readonly">
-            </div>
+                [(ngModel)]="user.id"
+                (change)="onUserChange('id')"
+                placeholder="Member Number"
+              >
+            </mat-form-field>
           </div>
         </div>
         <div layout="row">
           <div flex>
-            <div class="user-info-field">
-              <input type="text"
+            <mat-form-field>
+              <input
+                matInput
+                type="text"
                 name="email"
-                ng-model="$ctrl.user.email"
-                ng-model-options="{ debounce: 200 }"
-                ng-change="$ctrl.onUserChange('email')"
-                placeholder="Mail"
-                ng-readonly="($ctrl.user.id && $ctrl.user.email && $ctrl.user.lastActivityAt) || readonly">
-            </div>
+                [(ngModel)]="user.email"
+                (change)="onUserChange('email')"
+                placeholder="E-mail"
+              >
+            </mat-form-field>
           </div>
         </div>
-        <div class="user-info-alerts" ng-show="submitAlerts.length">
-          <uib-alert ng-repeat="alert in submitAlerts" type="alert.type">
+        <div *ngIf="submitAlerts && submitAlerts.length">
+          <ngb-alert *ngFor="let alert of submitAlerts" type="alert.type">
             {{alert.message}}
-          </uib-alert>
-          <span class="btn btn-primary btn-block" ng-click="dismissAlerts()">ok</span>
+          </ngb-alert>
+          <span class="btn btn-primary btn-block" (click)="dismissAlerts()">ok</span>
         </div>
       </fieldset>
 
       <!-- Results -->
-      <div class="user-info-results" ng-if="$ctrl.searchResults.length">
+      <div class="user-info-results" *ngIf="searchResults && searchResults.data.length">
         <div class="user-info-results-header">
-          <span class="user-info-results-close icon-close" ng-click="$ctrl.closeResults()">x</span>
-          {{ $ctrl.resultsInfo.length }} résultats
+          <span class="user-info-results-close icon-close" (click)="closeResults()">x</span>
+          {{ resultsInfo.length }} résultats
         </div>
-        <md-content class="user-info-results-content">
-          <md-list>
-            <md-item ng-repeat="result in $ctrl.searchResults" >
+        <mat-table #table [dataSource]="searchResults">
+          <!-- Position Column -->
+          <ng-container matColumnDef="id">
+            <mat-header-cell *matHeaderCellDef> Id </mat-header-cell>
+            <mat-cell *matCellDef="let customer"> {{customer.id}} </mat-cell>
+          </ng-container>
 
-              <div class="ios-list-title" ng-if="result.role != $ctrl.searchResults[$index - 1].role">
-                <span data-icon="users"></span>
-                {{ result.role }}
-              </div>
+          <!-- Name Column -->
+          <ng-container matColumnDef="first">
+            <mat-header-cell *matHeaderCellDef> First Name </mat-header-cell>
+            <mat-cell *matCellDef="let customer"> {{customer.firstName}} </mat-cell>
+          </ng-container>
 
-              <md-item-content ng-click="$ctrl.setUser(result)">
-                <div class="md-tile-content">
-                  <div layout="row" layout-align="center-center">
-                    <div flex="15" class="text--center">
-                      <affiliation-type-badge
-                        affiliation-type-id="result.affiliationTypeId"
-                        class="icon">
-                      </affiliation-type-badge>
-                    </div>
-                    <div flex="85">
-                      <div class="user-info-results-item">
-                        {{ result.firstName }}
-                        <strong>{{ result.lastName }}</strong>
-                        <span ng-if="result.id" class="push-half--left muted">
-                          {{ result.id }}
-                        </span>
-                      </div>
-                      <div class="vk-content">
-                        <span ng-if="result.phone" class="push-half--right">
-                          <span class="icon icon-phone"></span>
-                          {{ result.phone }}
-                        </span>
-                        <span ng-if="result.email">
-                          <span class="icon icon-email"></span>
-                          {{ result.email }}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </md-item-content>
-              <md-divider ng-if="!$last"></md-divider>
-            </md-item>
-          </md-list>
-        </md-content>
+          <!-- Weight Column -->
+          <ng-container matColumnDef="last">
+            <mat-header-cell *matHeaderCellDef> Last Name </mat-header-cell>
+            <mat-cell *matCellDef="let customer"> {{customer.lastName}} </mat-cell>
+          </ng-container>
+
+          <!-- Symbol Column -->
+          <ng-container matColumnDef="phone">
+            <mat-header-cell *matHeaderCellDef> Phone </mat-header-cell>
+            <mat-cell *matCellDef="let customer"> {{customer.phone}} </mat-cell>
+          </ng-container>
+
+          <!-- Symbol Column -->
+          <ng-container matColumnDef="email">
+            <mat-header-cell *matHeaderCellDef> Email </mat-header-cell>
+            <mat-cell *matCellDef="let customer"> {{customer.email}} </mat-cell>
+          </ng-container>
+
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumns;" (click)="setUser(row)"></mat-row>
+        </mat-table>
       </div>
-
     </div>
-</ng-form>
+</div>

@@ -3,12 +3,8 @@ import { Customer } from '../interfaces';
 
 export const userInfoServiceName = 'userInfoService';
 
-class UserInfoService {
-  constructor() {}
-
+export class UserInfoService {
   getCustomers(): Customer[] {
     return customersCollection as any as Customer[];
   }
 }
-
-export default UserInfoService;

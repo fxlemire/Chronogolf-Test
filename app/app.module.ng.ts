@@ -1,7 +1,7 @@
 import * as angular from 'angular';
-import userInfoComponent, { userInfoComponentName } from './components/userInfo.component';
-import UserInfoController, { UserInfoControllerName } from './controllers/userInfo.controller';
-import UserInfoService, { userInfoServiceName } from './services/userInfo.service';
+import { UserInfoComponent, userInfoComponentName } from './components/userInfo.component';
+import helper from './hybrid-helper';
+import { UserInfoService, userInfoServiceName } from './services/userInfo.service';
 
 import 'angular-messages/angular-messages.js';
 import 'angular-sanitize/angular-sanitize.js';
@@ -21,8 +21,6 @@ export const Ng1AppModule = angular.module('chronogolf', [
 ]);
 
 Ng1AppModule
-  .component(userInfoComponentName, userInfoComponent)
-  .controller(UserInfoControllerName, UserInfoController)
   .service(userInfoServiceName, UserInfoService);
 
-// angular.element(document).ready(() => angular.bootstrap(document.body, ['chronogolf']));
+helper.downgradeComponent('chronogolf', userInfoComponentName, UserInfoComponent);
